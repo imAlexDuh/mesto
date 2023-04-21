@@ -1,0 +1,15 @@
+.elements__card-button {
+    background-image: url(../../../images/like-button.png);
+    cursor: pointer;
+    width: 22px;
+    height: 19px;
+}
+
+.elements__card-button:hover {
+    opacity: .6;
+}
+
+.elements__card-button:active {
+    opacity: 1;
+    background-image: url(../../../images/black-like-button.png);
+}

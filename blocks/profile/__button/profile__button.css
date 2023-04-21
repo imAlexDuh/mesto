@@ -1,0 +1,22 @@
+.profile__button {
+    margin-left: auto;
+    background-image: url(../../../images/vector-big-button.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    align-self: center;
+    width: 146px;
+    height: 46px;
+    border: 2px solid #FFFFFF;
+    border-radius: 2px;
+}
+
+.profile__button:hover {
+    opacity: .6;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+    .profile__button {
+        width: 100%;
+    }
+}
