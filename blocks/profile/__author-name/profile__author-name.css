@@ -1,12 +1,11 @@
 .profile__author-name {
     font-family: 'Inter', 'Arial', sans-serif;
-    margin: 22px 0 16px;
+    margin: 22px 0 7px;
     max-width: 294px;
     font-style: normal;
     font-weight: 500;
     font-size: 42px;
     line-height: 48px;
-    max-height: 39px;
     color: #FFFFFF;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -15,9 +14,9 @@
 
 @media screen and (max-width: 900px) {
     .profile__author-name {
-        max-height: 26px;
+        max-width: 189px;
         margin-top: 26px;
-        margin-bottom: 14px;
+        margin-bottom: 5px;
         font-size: 27px;
         line-height: 33px;
         text-align: center;

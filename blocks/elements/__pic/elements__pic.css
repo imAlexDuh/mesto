@@ -1,3 +1,5 @@
 .elements__pic {
     object-fit: cover;
+    max-height: 282px;
+    max-width: 100%;
 }

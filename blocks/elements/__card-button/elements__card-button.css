@@ -3,6 +3,7 @@
     cursor: pointer;
     width: 22px;
     height: 19px;
+    padding: 0;
     border: none;
     background-color: white;
 }
