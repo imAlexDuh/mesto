@@ -19,6 +19,7 @@
 
 @media screen and (max-width: 900px) {
     .profile__button {
+        background-image: url(../../../images/smolvector.svg);
         width: 100%;
     }
 }

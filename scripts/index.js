@@ -5,9 +5,9 @@ let closeButton = popup.querySelector('.popup__close-button')
 let authorInfo = profile.querySelector('.profile__info')
 let author = authorInfo.querySelector('.profile__author')
 let profileName = author.querySelector('.profile__author-name')
-let popupName = popup.querySelector('.popup__text-name')
+let popupName = popup.querySelector('.popup__text_form_name')
 let info = author.querySelector('.profile__author-info')
-let popupInfo = popup.querySelector('.popup__text-info')
+let popupInfo = popup.querySelector('.popup__text_form_info')
 let formElement = popup.querySelector('.popup__fields')
 
 function popupOpen() {
