@@ -27,48 +27,6 @@
         </section>
 
         <section class="elements">
-            <div class="elements__element">
-                <img src="./images/elements/cat.jpg" alt="картинка" class="elements__pic">
-                <div class="elements__card">
-                    <h2 class="elements__card-name">Карачаевск</h2>
-                    <button type="button" class="elements__card-button"></button>
-                </div>
-            </div>
-            <div class="elements__element">
-                <img src="./images/elements/second.jpg" alt="картинка" class="elements__pic">
-                <div class="elements__card">
-                    <h2 class="elements__card-name">Гора Эльбрус</h2>
-                    <button type="button" class="elements__card-button"></button>
-                </div>
-            </div>
-            <div class="elements__element">
-                <img src="./images/elements/third.jpg" alt="картинка" class="elements__pic">
-                <div class="elements__card">
-                    <h2 class="elements__card-name">Домбай</h2>
-                    <button type="button" class="elements__card-button"></button>
-                </div>
-            </div>
-            <div class="elements__element">
-                <img src="./images/elements/second.jpg" alt="картинка" class="elements__pic">
-                <div class="elements__card">
-                    <h2 class="elements__card-name">Гора Эльбрус</h2>
-                    <button type="button" class="elements__card-button"></button>
-                </div>
-            </div>
-            <div class="elements__element">
-                <img src="./images/elements/third.jpg" alt="картинка" class="elements__pic">
-                <div class="elements__card">
-                    <h2 class="elements__card-name">Домбай</h2>
-                    <button type="button" class="elements__card-button"></button>
-                </div>
-            </div>
-            <div class="elements__element">
-                <img src="./images/elements/first.jpg" alt="картинка" class="elements__pic">
-                <div class="elements__card">
-                    <h2 class="elements__card-name">Карачаево-Черкессия</h2>
-                    <button type="button" class="elements__card-button"></button>
-                </div>
-            </div>
         </section>
     </main>
     <footer class="footer">
@@ -78,14 +36,38 @@
     <div class="popup">
         <div class="popup__container">
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form name="popup-submit-form" class="popup__fields">
-                <input name="popup-input" type="text" placeholder="" class="popup__text  popup__text_form_name">
-                <input name="popup-input" type="text" placeholder="" class="popup__text popup__text_form_info">
-                <button type="submit" class="popup__save-button">Сохранить</button>
+            <form action="" name="popup-form" class="popup__fields">
+                <input name="" type="text" placeholder="" class="popup__text popup__text-name">
+                <input name="" type="text" placeholder="" class="popup__text popup__text-info">
+                <button type="submit" class="popup__save-button" id="popup__save-button">Сохранить</button>
             </form>
-            <button type="button" class="popup__close-button"></button>
+            <button type="button" class="popup__close-button" id="popup__close-button"></button>
         </div>
     </div>
+
+    <div class="popup" id="add-popup">
+        <div class="popup__container">
+            <h2 class="popup__title">Новое место</h2>
+            <form action="" name="addform" id="addform" class="popup__fields">
+                <input name="imgname" type="text" id="name" placeholder="Название" class="popup__text popup__text-name">
+                <input name="imgurl" type="url" id="link" placeholder="Ссылка на картинку"
+                    class="popup__text popup__text-img">
+                <button type="submit" class="popup__save-button" id="add-popup__save-button">Создать</button>
+            </form>
+            <button type="button" class="popup__close-button" id="add-popup__close-button"></button></button>
+        </div>
+    </div>
+
+    <template class="elements__element-template">
+        <div class="elements__element">
+            <img class="elements__pic">
+            <div class="elements__card">
+                <h2 class="elements__card-name"></h2>
+                <button class="elements__card-button"></button>
+            </div>
+        </div>
+    </template>
+
     <script src="./scripts/index.js"></script>
 </body>
 

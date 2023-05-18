@@ -1,16 +1,53 @@
-let profile = document.querySelector('.profile')
-let editButton = profile.querySelector('.profile__edit-button')
-let popup = document.querySelector('.popup')
-let closeButton = popup.querySelector('.popup__close-button')
-let authorInfo = profile.querySelector('.profile__info')
-let author = authorInfo.querySelector('.profile__author')
-let profileName = author.querySelector('.profile__author-name')
-let popupName = popup.querySelector('.popup__text_form_name')
-let info = author.querySelector('.profile__author-info')
-let popupInfo = popup.querySelector('.popup__text_form_info')
-let formElement = popup.querySelector('.popup__fields')
+const profile = document.querySelector('.profile')
+const popup = document.querySelector('.popup')
+const editButton = profile.querySelector('.profile__edit-button')
+const authorInfo = profile.querySelector('.profile__info')
+const closeButton = popup.querySelector('.popup__close-button')
+const popupInfo = popup.querySelector('.popup__text-info')
+const formElement = popup.querySelector('.popup__fields')
+const popupName = popup.querySelector('.popup__text-name')
+const author = authorInfo.querySelector('.profile__author')
+const profileName = author.querySelector('.profile__author-name')
+const info = author.querySelector('.profile__author-info')
+const addPopup = document.querySelector('#add-popup')
+const elements = document.querySelector('.elements')
+const elementsTemplate = document.querySelector('.elements__element-template').content
+const form = popup.querySelector('#popup-form')
+const addForm = addPopup.querySelector('#addform')
+const elementName = addPopup.querySelector('.popup__text-name')
+const elementImg = addPopup.querySelector('.popup__text-img')
+const addButton = profile.querySelector('.profile__button')
+const newCardButton = addPopup.querySelector('#add-popup__save-button')
+const addPopupCloseButton = addPopup.querySelector('#add-popup__close-button')
 
-function popupOpen() {
+const initialCards = [
+    {
+        name: 'Архыз',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+        name: 'Челябинская область',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+        name: 'Иваново',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+        name: 'Камчатка',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+        name: 'Холмогорский район',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+        name: 'Байкал',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+];
+
+function editPopupOpen() {
     popupName.value = profileName.textContent;
     popupInfo.value = info.textContent;
     popup.classList.add('popup_opened');
@@ -20,6 +57,14 @@ function popupClose() {
     popup.classList.remove('popup_opened')
 }
 
+function addPopupOpen() {
+    addPopup.classList.add('popup_opened');
+}
+
+function addPopupClose() {
+    addPopup.classList.remove('popup_opened')
+}
+
 function handleFormSubmit(evt) {
     evt.preventDefault();
     profileName.textContent = popupName.value;
@@ -27,6 +72,39 @@ function handleFormSubmit(evt) {
     popupClose();
 }
 
-editButton.addEventListener('click', popupOpen)
+function addElement(evt) {
+    evt.preventDefault();
+    renderElements(elementName.value, elementImg.value);
+    addPopupClose(addPopup);
+}
+
+const renderElements = (name, link) => {
+    elements.prepend(createElement(name, link));
+}
+
+function returnElement(name, link) {
+    const cardElement = elementsTemplate.querySelector('.elements__element').cloneNode(true);
+    cardElement.querySelector('.elements__card-name').textContent = name;
+    cardElement.querySelector('.elements__pic').src = link;
+    return cardElement;
+}
+
+function createElement(name, link) {
+    const cardElement = returnElement(name, link);
+
+    const likeButton = cardElement.querySelector('.elements__card-button');
+    likeButton.addEventListener('click', () => {
+        likeButton.classList.toggle('elements__card-button_active');
+    });
+    return cardElement;
+}
+
+const defaultcards = initialCards.map(({ name, link }) => createElement(name, link));
+elements.prepend(...defaultcards);
+
+editButton.addEventListener('click', editPopupOpen)
 closeButton.addEventListener('click', popupClose)
-formElement.addEventListener('submit', handleFormSubmit); 
+addButton.addEventListener('click', addPopupOpen)
+addPopupCloseButton.addEventListener('click', addPopupClose)
+formElement.addEventListener('submit', handleFormSubmit);
+addForm.addEventListener('submit', addElement);
