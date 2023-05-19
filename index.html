@@ -33,12 +33,12 @@
         <p class="footer__copyright">© 2023 Mesto Russia</p>
     </footer>
 
-    <div class="popup">
+    <div class="popup" id="edit-popup">
         <div class="popup__container">
             <h2 class="popup__title">Редактировать профиль</h2>
             <form name="popup-form" class="popup__fields">
-                <input type="text" class="popup__text popup__text-name">
-                <input type="text" class="popup__text popup__text-info">
+                <input type="text" placeholder="Имя" class="popup__text popup__text-name">
+                <input type="text" placeholder="Вид деятельности" class="popup__text popup__text-info">
                 <button type="submit" class="popup__save-button" id="popup__save-button">Сохранить</button>
             </form>
             <button type="button" class="popup__close-button" id="popup__close-button"></button>
@@ -77,6 +77,7 @@
         </div>
     </template>
 
+    <script src="./scripts/initialCards.js"></script>
     <script src="./scripts/index.js"></script>
 </body>
 
