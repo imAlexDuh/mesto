@@ -19,6 +19,10 @@ const elementImg = addPopup.querySelector('.popup__text-img')
 const addButton = profile.querySelector('.profile__button')
 const newCardButton = addPopup.querySelector('#add-popup__save-button')
 const addPopupCloseButton = addPopup.querySelector('#add-popup__close-button')
+const imgPopup = document.querySelector("#img-popup")
+const img = imgPopup.querySelector(".popup__image")
+const imgName = imgPopup.querySelector(".popup__image-name")
+const imgPopupCloseButton = imgPopup.querySelector("#img-popup__close-button")
 
 const initialCards = [
     {
@@ -65,6 +69,14 @@ function addPopupClose() {
     addPopup.classList.remove('popup_opened')
 }
 
+function imgPopupOpen() {
+    imgPopup.classList.add('popup_opened');
+}
+
+function imgPopupClose() {
+    imgPopup.classList.remove('popup_opened')
+}
+
 function handleFormSubmit(evt) {
     evt.preventDefault();
     profileName.textContent = popupName.value;
@@ -96,6 +108,18 @@ function createElement(name, link) {
     likeButton.addEventListener('click', () => {
         likeButton.classList.toggle('elements__card-button_active');
     });
+
+    cardElement.querySelector('.elements__delete-button').addEventListener('click', () => {
+        cardElement.remove();
+      });
+
+      cardElement.querySelector('.elements__pic').addEventListener('click', () => {
+        imgName.textContent = name;
+        img.src = link;
+        img.alt = name;
+        imgPopupOpen();
+      });
+
     return cardElement;
 }
 
@@ -106,5 +130,6 @@ editButton.addEventListener('click', editPopupOpen)
 closeButton.addEventListener('click', popupClose)
 addButton.addEventListener('click', addPopupOpen)
 addPopupCloseButton.addEventListener('click', addPopupClose)
+imgPopupCloseButton.addEventListener('click', imgPopupClose)
 formElement.addEventListener('submit', handleFormSubmit);
 addForm.addEventListener('submit', addElement);
