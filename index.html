@@ -36,10 +36,14 @@
     <div class="popup" id="edit-popup">
         <div class="popup__container">
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form name="popup-form" class="popup__fields">
-                <input type="text" placeholder="Имя" class="popup__text popup__text-name">
-                <input type="text" placeholder="Вид деятельности" class="popup__text popup__text-info">
-                <button type="submit" class="popup__save-button" id="popup__save-button">Сохранить</button>
+            <form name="popup-form" class="popup__fields" novalidate>
+                <fieldset class="popup__fieldset">
+                    <input type="text" placeholder="Имя" id="profile-name" class="popup__text popup__text-name" required minlength="2" maxlength="40">
+                    <span class="popup__input-error" id="profile-name-error"></span>
+                    <input type="text" placeholder="Вид деятельности" id="profile-info" class="popup__text popup__text-info" required minlength="2" maxlength="200">
+                    <span class="popup__input-error" id="profile-info-error"></span>
+                    <button type="submit" class="popup__save-button popup__save-button_inactive" id="popup__save-button" disabled>Сохранить</button>
+                </fieldset>
             </form>
             <button type="button" class="popup__close-button" id="popup__close-button"></button>
         </div>
@@ -48,11 +52,17 @@
     <div class="popup" id="add-popup">
         <div class="popup__container">
             <h2 class="popup__title">Новое место</h2>
-            <form name="addform" id="addform" class="popup__fields">
-                <input name="imgname" type="text" id="name" placeholder="Название" class="popup__text popup__text-name">
-                <input name="imgurl" type="url" id="link" placeholder="Ссылка на картинку"
-                    class="popup__text popup__text-img">
-                <button type="submit" class="popup__save-button" id="add-popup__save-button">Создать</button>
+            <form name="addform" id="addform" class="popup__fields" novalidate>
+                <fieldset class="popup__fieldset">
+                    <input name="imgname" type="text" id="photo-name" placeholder="Название"
+                        class="popup__text popup__text-name" required minlength="2" maxlength="30">
+                    <span class="popup__input-error" id="photo-name-error"></span>
+                    <input name="imgurl" type="url" id="photo-link" placeholder="Ссылка на картинку"
+                        class="popup__text popup__text-img" required>
+                    <span class="popup__input-error" id="photo-link-error">Введите URL.</span>
+                    <button type="submit" class="popup__save-button popup__save-button_inactive"
+                        id="add-popup__save-button" disabled>Создать</button>
+                </fieldset>
             </form>
             <button type="button" class="popup__close-button" id="add-popup__close-button"></button>
         </div>
@@ -79,6 +89,7 @@
 
     <script src="./scripts/initialCards.js"></script>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validation.js"></script>
 </body>
 
 </html>
