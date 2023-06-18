@@ -117,6 +117,8 @@ buttonCloseEditProfile.addEventListener('click', () => {
 
 buttonAdd.addEventListener('click', () => {
     openPopup(popupAddCard);
+    newCardButton.classList.add(validationSettings.inactiveButtonClass);
+    newCardButton.disabled = true;
 });
 
 popupAddCloseButton.addEventListener('click', () => {
