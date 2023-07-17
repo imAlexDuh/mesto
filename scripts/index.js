@@ -3,24 +3,56 @@ import { FormValidator } from './FormValidator.js';
 
 const profile = document.querySelector('.profile')
 const popupEditProfile = document.querySelector('.popup')
+const cardSection = document.querySelector('.elements')
 const buttonEditProfile = profile.querySelector('.profile__edit-button')
 const authorInfo = profile.querySelector('.profile__info')
 const buttonCloseEditProfile = popupEditProfile.querySelector('.popup__close-button')
 const popupInfo = popupEditProfile.querySelector('.popup__text-info')
-const formEditProfile = popupEditProfile.querySelector('.popup__fields')
+const formEditProfile = document.forms["popup-form"];
 const popupNameEditProfile = popupEditProfile.querySelector('.popup__text-name')
 const author = authorInfo.querySelector('.profile__author')
 const profileName = author.querySelector('.profile__author-name')
 const info = author.querySelector('.profile__author-info')
 const popupAddCard = document.querySelector('#add-popup')
-const formAddCard = popupAddCard.querySelector('#addform')
-const elementNameSelector = '#photo-name'
-const elementImgSelector = '#photo-link'
+const formAddCard = document.forms["addform"]
 const buttonAdd = profile.querySelector('.profile__button')
 const newCardButton = popupAddCard.querySelector('#add-popup__save-button')
 const popupAddCloseButton = popupAddCard.querySelector('#add-popup__close-button')
 const popupImg = document.querySelector("#img-popup")
 const imgPopupCloseButton = popupImg.querySelector("#img-popup__close-button")
+const img = popupImg.querySelector(".popup__image")
+const imgName = popupImg.querySelector(".popup__image-name")
+const forms = Array.from(document.forms);
+
+const elementNameSelector = '#photo-name'
+const elementImgSelector = '#photo-link'
+const elementsTemplateSelector = '.elements__element-template';
+const popupsButtonSelector = '.profile-open-popup';
+
+const buttonsList = Array.from(profile.querySelectorAll(popupsButtonSelector));
+
+const elementsSettings = {
+    elementsSelector: '.elements',
+    elementsElementSelector: '.elements__element',
+    elementsPicSelector: '.elements__pic',
+    elementsCardNameSelector: '.elements__card-name',
+    elementsLikeSelector: '.elements__card-button',
+    elementsDeleteButtonSelector: '.elements__delete-button',
+    elementsPicClass: 'elements__pic',
+    elementsLikeButtonClass: 'elements__card-button',
+    elementsDeleteButtonClass: 'elements__delete-button',
+}
+
+const validationSettings = {
+    formSelector: '.popup__fields',
+    fieldsetSelector: '.popup__fieldset',
+    inputSelector: '.popup__text',
+    submitButtonSelector: '.popup__save-button',
+    profileElementSelector: '.profile',
+    inactiveButtonClass: 'popup__save-button_inactive',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error_active',
+}
 
 const initialCards = [
     {
@@ -49,66 +81,36 @@ const initialCards = [
     }
 ];
 
-const newCard = {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+function createCard(cardData) {
+    const card = new Card(cardData, elementsTemplateSelector, elementsSettings, checkCardClick);
+    const cardElement = card.generateCard();
+    return cardElement;
 }
 
-const elementsSettings = {
-    elementsSelector: '.elements',
-    elementsElementSelector: '.elements__element',
-    elementsPicSelector: '.elements__pic',
-    elementsCardNameSelector: '.elements__card-name',
-    elementsLikeSelector: '.elements__card-button',
-    elementsDeleteButtonSelector: '.elements__delete-button',
-    elementsPicClass: 'elements__pic',
-    elementsLikeButtonClass: 'elements__card-button',
-    elementsDeleteButtonClass: 'elements__delete-button',
+initialCards.forEach(cardData => {
+    const card = createCard(cardData);
+    cardSection.append(card);
+})
+
+function addForm() {
+    const cardElement = createCard({
+        name: popupAddCard.querySelector(elementNameSelector).value,
+        link: popupAddCard.querySelector(elementImgSelector).value,
+    })
+    cardSection.prepend(cardElement);
+    closePopup(popupAddCard);
+    formAddCard.reset();
 }
 
-const validationSettings = {
-    formSelector: '.popup__fields',
-    fieldsetSelector: '.popup__fieldset',
-    inputSelector: '.popup__text',
-    submitButtonSelector: '.popup__save-button',
-    profileElementSelector: '.profile',
-    inactiveButtonClass: 'popup__save-button_inactive',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__input-error_active',
-  }
-
-const elementsTemplateSelector = '.elements__element-template';
-
-const defaultCards = (templateSelector, cardsData, cardsSettings) => {
-    const card = new Card(cardsData, templateSelector);
-    card.initialize(cardsData, cardsSettings);
-}
-
-const addCard = (templateSelector, cardData, cardsSettings) => {
-    const card = new Card(cardData, templateSelector);
-    card.generateCard(cardData, cardsSettings);
-}
-
-const getCardData = () => {
-    const cardName = popupAddCard.querySelector(elementNameSelector).value;
-    const cardLink = popupAddCard.querySelector(elementImgSelector).value;
-    const CardData = {
-        name: cardName,
-        link: cardLink,
-    }
-
-    return CardData;
-}
-
-const setFormValidation = (settings, formElement) => {
-    const formValidator = new FormValidator(settings, formElement);
+function setValidation(formElement) {
+    const formValidator = new FormValidator(validationSettings, formElement, buttonsList);
+    console.log(formValidator);
     formValidator.enableValidation();
 }
 
-defaultCards(elementsTemplateSelector, initialCards, elementsSettings)
-addCard(elementsTemplateSelector, newCard, elementsSettings)
-setFormValidation(validationSettings, formAddCard)
-setFormValidation(validationSettings, formEditProfile)
+forms.forEach(form => {
+    setValidation(form);
+})
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');
@@ -148,19 +150,15 @@ function submitEditProfileForm(evt) {
     closePopup(popupEditProfile);
 }
 
-function addCardForm() {
-    const cardData = getCardData();
-    addCard(elementsTemplateSelector, cardData, elementsSettings);
-    formAddCard.reset();
-    closePopup(popupAddCard);
+function checkCardClick(name, link) {
+    img.src = link;
+    imgName.textContent = name;
+    img.alt = name;
+    openPopup(popupImg);
 }
 
 buttonEditProfile.addEventListener('click', () => {
     openEditProfileForm();
-});
-
-buttonCloseEditProfile.addEventListener('click', () => {
-    closePopup(popupEditProfile);
 });
 
 buttonAdd.addEventListener('click', () => {
@@ -169,9 +167,13 @@ buttonAdd.addEventListener('click', () => {
     newCardButton.disabled = true;
 });
 
+buttonCloseEditProfile.addEventListener('click', () => {
+    closePopup(popupEditProfile);
+});
+
 formAddCard.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    addCardForm();
+    addForm();
 })
 
 popupAddCloseButton.addEventListener('click', () => {

@@ -1,7 +1,8 @@
 class FormValidator {
-    constructor(settings, formElement) {
+    constructor(settings, formElement, buttonsList) {
         this._settings = settings;
         this._formElement = formElement;
+        this._buttonsList = buttonsList;
     }
 
     _getErrorElement(inputElement) {
@@ -35,55 +36,61 @@ class FormValidator {
         }
     }
 
-    _openedCheckValidity(formInputs, formSubmitButton) {
-        const profileElement = document.querySelector(this._settings.profileElementSelector);
-        profileElement.addEventListener('click', (e) => {
-            if (e.target.classList.contains(this._settings.addCardButtonClass) || e.target.classList.contains(this._settings.editProfileButtonClass)) {
-                formInputs.forEach((inputElement) => {
-                    this._checkInputValidity(inputElement);
-                    this._toggleSubmitButtonState(formInputs, formSubmitButton);
-                });
-            }
-        })
-    }
-
-    _toggleSubmitButtonState(formInputs, formSubmitButton) {
-        if (this._hasInvalidInput(formInputs)) {
-            formSubmitButton.disabled = true;
-            formSubmitButton.classList.add(this._settings.inactiveButtonClass);
+    _toggleSubmitButtonState() {
+        if (this._hasInvalidInput(this._formInputs)) {
+            this._formSubmitButton.disabled = true;
+            this._formSubmitButton.classList.add(this._settings.inactiveButtonClass);
         } else {
-            formSubmitButton.disabled = false;
-            formSubmitButton.classList.remove(this._settings.inactiveButtonClass);
+            this._formSubmitButton.disabled = false;
+            this._formSubmitButton.classList.remove(this._settings.inactiveButtonClass);
         }
     }
 
-    _inputEventListener(e, formInputs, formSubmitButton) {
+    _inputEventListener(e) {
         const inputElement = e.target;
         this._checkInputValidity(inputElement);
-        this._toggleSubmitButtonState(formInputs, formSubmitButton);
+        this._toggleSubmitButtonState();
     }
 
-    _setEventListeners(fieldset) {
-        const formInputs = Array.from(fieldset.querySelectorAll(this._settings.inputSelector));
-        const formSubmitButton = fieldset.querySelector(this._settings.submitButtonSelector);
-        this._toggleSubmitButtonState(formInputs, formSubmitButton);
-        formInputs.forEach(inputElement => {
-            inputElement.addEventListener('input', (e) => {
-                this._inputEventListener(e, formInputs, formSubmitButton);
-            });
-        });
-        this._openedCheckValidity(formInputs, formSubmitButton);
+    _hideErrorMessage() {
+        this._inputsList = Array.from(this._formElement.querySelectorAll(this._settings.inputSelector));
+        this._inputsList.forEach(element => {
+            element.classList.remove(this._settings.inputErrorClass);
+        })
+        this._errorsList = Array.from(this._formElement.querySelectorAll(`${this._settings.inputSelector}-error`));
+        this._errorsList.forEach(element => {
+            element.textContent = "";
+            element.classList.remove(this._settings.errorClass);
+        })
+    }
+
+    _setEventListeners() {
+        this._formElement.addEventListener("reset", () => {
+            this._hideErrorMessage();
+        })
+
+        this._formInputs = Array.from(this._formElement.querySelectorAll(this._settings.inputSelector));
+        this._formSubmitButton = this._formElement.querySelector(this._settings.submitButtonSelector);
+
+        this._buttonsList.forEach(button => {
+            button.addEventListener("click", () => {
+                this._toggleSubmitButtonState();
+            })
+        })
+        this._toggleSubmitButtonState();
+        this._formInputs.forEach(inputElement => {
+            inputElement.addEventListener("input", (e) => {
+                this._inputEventListener(e);
+            })
+        })
     }
 
     enableValidation() {
-        this._formElement.addEventListener('submit', (e) => {
+        this._formElement.addEventListener("submit", (e) => {
             e.preventDefault();
-        })
-        const fieldsetList = Array.from(this._formElement.querySelectorAll(this._settings.fieldsetSelector));
-        fieldsetList.forEach(fieldset => {
-            this._setEventListeners(fieldset);
-        })
-    }
+        });
+            this._setEventListeners();
+        }
 }
 
 export { FormValidator }
