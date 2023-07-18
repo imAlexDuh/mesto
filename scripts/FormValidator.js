@@ -1,8 +1,7 @@
 class FormValidator {
-    constructor(settings, formElement, buttonsList) {
+    constructor(settings, formElement) {
         this._settings = settings;
         this._formElement = formElement;
-        this._buttonsList = buttonsList;
     }
 
     _getErrorElement(inputElement) {
@@ -52,17 +51,12 @@ class FormValidator {
         this._toggleSubmitButtonState();
     }
 
-    _hideErrorMessage() {
-        this._inputsList = Array.from(this._formElement.querySelectorAll(this._settings.inputSelector));
-        this._inputsList.forEach(element => {
-            element.classList.remove(this._settings.inputErrorClass);
-        })
-        this._errorsList = Array.from(this._formElement.querySelectorAll(`${this._settings.inputSelector}-error`));
-        this._errorsList.forEach(element => {
-            element.textContent = "";
-            element.classList.remove(this._settings.errorClass);
-        })
-    }
+ _hideErrorMessage() {
+        this._formInputs.forEach((element) => {
+          const errorElement = this._getErrorElement(element);
+          this._hideInputError(element, errorElement);
+        });
+      }
 
     _setEventListeners() {
         this._formElement.addEventListener("reset", () => {
@@ -71,9 +65,11 @@ class FormValidator {
 
         this._formInputs = Array.from(this._formElement.querySelectorAll(this._settings.inputSelector));
         this._formSubmitButton = this._formElement.querySelector(this._settings.submitButtonSelector);
+        this._buttonsList = Array.from(document.querySelectorAll(this._settings.popupsButtonSelector));
 
         this._buttonsList.forEach(button => {
             button.addEventListener("click", () => {
+                console.log(this._buttonsList);
                 this._toggleSubmitButtonState();
             })
         })

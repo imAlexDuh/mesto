@@ -26,10 +26,10 @@ const forms = Array.from(document.forms);
 
 const elementNameSelector = '#photo-name'
 const elementImgSelector = '#photo-link'
-const elementsTemplateSelector = '.elements__element-template';
-const popupsButtonSelector = '.profile-open-popup';
+const cardName = popupAddCard.querySelector(elementNameSelector)
+const cardLink = popupAddCard.querySelector(elementImgSelector)
 
-const buttonsList = Array.from(profile.querySelectorAll(popupsButtonSelector));
+const elementsTemplateSelector = '.elements__element-template';
 
 const elementsSettings = {
     elementsSelector: '.elements',
@@ -44,6 +44,7 @@ const elementsSettings = {
 }
 
 const validationSettings = {
+    popupsButtonSelector: '.profile-open-popup',
     formSelector: '.popup__fields',
     fieldsetSelector: '.popup__fieldset',
     inputSelector: '.popup__text',
@@ -92,10 +93,10 @@ initialCards.forEach(cardData => {
     cardSection.append(card);
 })
 
-function addForm() {
+function handleCardFormSubmtit() {
     const cardElement = createCard({
-        name: popupAddCard.querySelector(elementNameSelector).value,
-        link: popupAddCard.querySelector(elementImgSelector).value,
+        name: cardName.value,
+        link: cardLink.value,
     })
     cardSection.prepend(cardElement);
     closePopup(popupAddCard);
@@ -103,8 +104,7 @@ function addForm() {
 }
 
 function setValidation(formElement) {
-    const formValidator = new FormValidator(validationSettings, formElement, buttonsList);
-    console.log(formValidator);
+    const formValidator = new FormValidator(validationSettings, formElement);
     formValidator.enableValidation();
 }
 
@@ -163,8 +163,6 @@ buttonEditProfile.addEventListener('click', () => {
 
 buttonAdd.addEventListener('click', () => {
     openPopup(popupAddCard);
-    newCardButton.classList.add(validationSettings.inactiveButtonClass);
-    newCardButton.disabled = true;
 });
 
 buttonCloseEditProfile.addEventListener('click', () => {
@@ -173,7 +171,7 @@ buttonCloseEditProfile.addEventListener('click', () => {
 
 formAddCard.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    addForm();
+    handleCardFormSubmtit();
 })
 
 popupAddCloseButton.addEventListener('click', () => {
