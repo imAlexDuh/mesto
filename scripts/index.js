@@ -16,13 +16,12 @@ const info = author.querySelector('.profile__author-info')
 const popupAddCard = document.querySelector('#add-popup')
 const formAddCard = document.forms["addform"]
 const buttonAdd = profile.querySelector('.profile__button')
-const newCardButton = popupAddCard.querySelector('#add-popup__save-button')
 const popupAddCloseButton = popupAddCard.querySelector('#add-popup__close-button')
 const popupImg = document.querySelector("#img-popup")
 const imgPopupCloseButton = popupImg.querySelector("#img-popup__close-button")
 const img = popupImg.querySelector(".popup__image")
 const imgName = popupImg.querySelector(".popup__image-name")
-const forms = Array.from(document.forms);
+const formValidators = {}
 
 const elementNameSelector = '#photo-name'
 const elementImgSelector = '#photo-link'
@@ -103,14 +102,17 @@ function handleCardFormSubmtit() {
     formAddCard.reset();
 }
 
-function setValidation(formElement) {
-    const formValidator = new FormValidator(validationSettings, formElement);
-    formValidator.enableValidation();
-}
+const enableValidation = (validationSettings) => {
+  const formList = Array.from(document.querySelectorAll(validationSettings.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(validationSettings, formElement)
+    const formName = formElement.getAttribute('name')
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
 
-forms.forEach(form => {
-    setValidation(form);
-})
+enableValidation(validationSettings);
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');
@@ -120,8 +122,8 @@ function openPopup(popup) {
 
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', closePopupEscape)
-    popup.removeEventListener('click', closePopupOverlay)
+    document.removeEventListener('keydown', closePopupEscape);
+    popup.removeEventListener('click', closePopupOverlay);
 }
 
 function closePopupEscape(evt) {
@@ -140,11 +142,11 @@ function closePopupOverlay(evt) {
 function openEditProfileForm() {
     popupNameEditProfile.value = profileName.textContent;
     popupInfo.value = info.textContent;
+    formValidators[ formEditProfile.getAttribute('name') ].toggleSubmitButtonState();
     openPopup(popupEditProfile);
 }
 
 function submitEditProfileForm(evt) {
-    evt.preventDefault();
     profileName.textContent = popupNameEditProfile.value;
     info.textContent = popupInfo.value;
     closePopup(popupEditProfile);
@@ -172,6 +174,13 @@ buttonCloseEditProfile.addEventListener('click', () => {
 formAddCard.addEventListener('submit', (evt) => {
     evt.preventDefault();
     handleCardFormSubmtit();
+    formValidators[ formAddCard.getAttribute('name') ].toggleSubmitButtonState();
+})
+
+formEditProfile.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    submitEditProfileForm();
+    formValidators[ formEditProfile.getAttribute('name') ].toggleSubmitButtonState();
 })
 
 popupAddCloseButton.addEventListener('click', () => {
@@ -181,5 +190,3 @@ popupAddCloseButton.addEventListener('click', () => {
 imgPopupCloseButton.addEventListener('click', () => {
     closePopup(popupImg);
 });
-
-formEditProfile.addEventListener('submit', submitEditProfileForm);
