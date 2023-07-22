@@ -180,7 +180,6 @@ formAddCard.addEventListener('submit', (evt) => {
 formEditProfile.addEventListener('submit', (evt) => {
     evt.preventDefault();
     submitEditProfileForm();
-    formValidators[ formEditProfile.getAttribute('name') ].toggleSubmitButtonState();
 })
 
 popupAddCloseButton.addEventListener('click', () => {
