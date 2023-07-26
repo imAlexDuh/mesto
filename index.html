@@ -38,10 +38,10 @@
             <h2 class="popup__title">Редактировать профиль</h2>
             <form name="popup-form" class="popup__fields" novalidate>
                 <fieldset class="popup__fieldset">
-                    <input type="text" placeholder="Имя" id="profile-name" class="popup__text popup__text-name" required
+                    <input name="name" type="text" placeholder="Имя" id="profile-name" class="popup__text popup__text-name" required
                         minlength="2" maxlength="40">
                     <span class="popup__input-error" id="profile-name-error"></span>
-                    <input type="text" placeholder="Вид деятельности" id="profile-info"
+                    <input name="description" type="text" placeholder="Вид деятельности" id="profile-info"
                         class="popup__text popup__text-info" required minlength="2" maxlength="200">
                     <span class="popup__input-error" id="profile-info-error"></span>
                     <button type="submit" class="popup__save-button popup__save-button_inactive" id="popup__save-button"
@@ -57,10 +57,10 @@
             <h2 class="popup__title">Новое место</h2>
             <form name="addform" id="addform" class="popup__fields" novalidate>
                 <fieldset class="popup__fieldset">
-                    <input name="imgname" type="text" id="photo-name" placeholder="Название"
+                    <input name="name" type="text" id="photo-name" placeholder="Название"
                         class="popup__text popup__text-name" required minlength="2" maxlength="30">
                     <span class="popup__input-error" id="photo-name-error"></span>
-                    <input name="imgurl" type="url" id="photo-link" placeholder="Ссылка на картинку"
+                    <input name="link" type="url" id="photo-link" placeholder="Ссылка на картинку"
                         class="popup__text popup__text-img" required>
                     <span class="popup__input-error" id="photo-link-error">Введите URL.</span>
                     <button type="submit" class="popup__save-button" popup__save-button_inactive
@@ -93,6 +93,11 @@
     <script type="module" src="./scripts/Card.js"></script>
     <script type="module" src="./scripts/FormValidator.js"></script>
     <script type="module" src="./scripts/index.js"></script>
+    <script type="module" src="./scripts/Section.js"></script>
+    <script type="module" src="./scripts/Popup.js"></script>
+    <script type="module" src="./scripts/PopupWithImage.js"></script>
+    <script type="module" src="./scripts/PopupWithForm.js"></script>
+    <script type="module" src="./scripts/UserInfo.js"></script>
 </body>
 
 </html>

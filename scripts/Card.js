@@ -1,5 +1,5 @@
 class Card {
-    constructor(cardData, templateSelector, settings, checkCardClick) {
+    constructor(cardData, templateSelector, settings, { checkCardClick }) {
         this._cardData = cardData;
         this._templateSelector = templateSelector;
         this._settings = settings;
@@ -25,7 +25,7 @@ class Card {
 
     _setEventListeners() {
         this._cardImg.addEventListener("click", () => {
-            this._checkCardClick(this._cardData.name, this._cardData.link);
+            this._checkCardClick(this._cardData);
         })
         this._likeButton.addEventListener("click", () => {
             this._like(this._cardData);
