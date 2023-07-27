@@ -6,12 +6,12 @@ export class PopupWithForm extends Popup {
         this._form = this._popupElement.querySelector(".popup__fields");
         this._submit = submit;
         this._submitEHandler = this._submitEHandler.bind(this);
+        this._inputList = Array.from(this._form.querySelectorAll(".popup__text"));
     }
 
     _getInputValues() {
-        const inputs = Array.from(this._form.querySelectorAll(".popup__text"));
         const cardData = {};
-        inputs.forEach(input => {
+        this._inputList.forEach(input => {
             const inputName = input.getAttribute('name');
             cardData[inputName] = input.value;
         })
@@ -34,4 +34,10 @@ export class PopupWithForm extends Popup {
         this.close();
         this._form.reset();
     }
+
+    setInputValues(userData) {
+        this._inputList.forEach((input) => {
+          input.value = userData[input.name];
+        });
+      }
 }
