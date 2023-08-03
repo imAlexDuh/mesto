@@ -7,6 +7,15 @@ export class PopupWithForm extends Popup {
         this._submit = submit;
         this._submitEHandler = this._submitEHandler.bind(this);
         this._inputList = Array.from(this._form.querySelectorAll(".popup__text"));
+        this._submitButton = this._form.querySelector('.popup__save-button');
+    }
+
+    loading(isLoading, loadingMessage = "Сохранение...", defaultMessage = "Сохранить") {
+        if (isLoading) {
+            this._submitButton.textContent = loadingMessage;
+        } else {
+            this._submitButton.textContent = defaultMessage;
+        }  
     }
 
     _getInputValues() {

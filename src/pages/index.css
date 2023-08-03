@@ -23,6 +23,8 @@
 @import url(../blocks/profile/__author-info/profile__author-info.css);
 @import url(../blocks/profile/__edit-button/profile__edit-button.css);
 @import url(../blocks/profile/__button/profile__button.css);
+@import url(../blocks/profile/__avatar-button/profile__avatar-button.css);
+@import url(../blocks/profile/__avatar-box/profile__avatar-box.css);
 
 /* elements */
 
@@ -34,6 +36,8 @@
 @import url(../blocks/elements/__pic/elements__pic.css);
 @import url(../blocks/elements/__card-button/_active/elements__card-button_active.css);
 @import url(../blocks/elements/__delete-button/elements__delete-button.css);
+@import url(../blocks/elements/__card-count/elements__card-count.css);
+@import url(../blocks/elements/__like/elements__like.css);
 
 /* footer */
 
