@@ -112,14 +112,14 @@ const popupWithAddForm = new PopupWithForm(addPopupSelector, {
             .then((res) => {
                 const card = createCard(res);
                 const cardElement = card.generateCard();
-                cardsSection.addItem(cardElement)
+                cardsSection.addItem(cardElement);
+                popupWithAddForm.close();
             })
             .catch((err) => {
                 console.log(err);
             })
             .finally(() => {
                 popupWithAddForm.loading(false);
-                popupWithAddForm.close();
             })
     }
 })
@@ -130,13 +130,13 @@ const popupWithUserForm = new PopupWithForm(infoPopupSelector, {
         api.setUserInfo(data)
             .then((res) => {
                 userInfo.setUserInfo(res);
+                popupWithUserForm.close();
             })
             .catch((err) => {
                 console.log(err);
             })
             .finally(() => {
                 popupWithUserForm.loading(false);
-                popupWithUserForm.close();
             })
     }
 })
@@ -147,13 +147,13 @@ const popupWithAvatarForm = new PopupWithForm(avatarPopupSelector, {
         api.setAvatar(data)
         .then((res) => {
             userInfo.changeAvatar(res);
+            popupWithAvatarForm.close();
         })
         .catch((err) => {
             console.log(err);
         })
         .finally(() => {
             popupWithAvatarForm.loading(false);
-            popupWithAvatarForm.close();
         })
     }
 })
