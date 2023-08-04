@@ -34,8 +34,8 @@ export class Api {
     }).then(this._handleResponse)
   }
 
-  getCardData() {
-    return Promise.all([this.getCardsInfo()]);
+  getAllData() {
+    return Promise.all([this.getUserInfo(), this.getCardsInfo()]);
   }
 
   addCard(data) {

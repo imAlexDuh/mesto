@@ -30,23 +30,12 @@ const api = new Api({
     }
 });
 
-api.getCardData()
-    .then((data) => {
-        const cardsData = data;
-        cardsSection.renderItems(cardsData);
-    })
-
-    .catch((err) => {
-        console.log(err);
-    })
-
-api.getUserInfo()
-    .then((data) => {
-        const userData = data;
+api.getAllData()
+    .then(([userData, cardsData]) => {
         ownerId = userData._id;
         userInfo.setUserInfo(userData);
+        cardsSection.renderItems(cardsData);
     })
-
     .catch((err) => {
         console.log(err);
     })
@@ -72,6 +61,7 @@ const createCard = (data) => {
             api.pressLike(data)
                 .then((data) => {
                     card.enableLikeCount(data)
+                    card.enableLikeState()
                 })
                 .catch((err) => {
                     console.log(err);
@@ -82,6 +72,7 @@ const createCard = (data) => {
             api.unpressLike(data)
                 .then((data) => {
                     card.enableLikeCount(data)
+                    card.disableLikeState()
                 })
                 .catch((err) => {
                     console.log(err);
@@ -128,6 +119,7 @@ const popupWithAddForm = new PopupWithForm(addPopupSelector, {
             })
             .finally(() => {
                 popupWithAddForm.loading(false);
+                popupWithAddForm.close();
             })
     }
 })
@@ -144,6 +136,7 @@ const popupWithUserForm = new PopupWithForm(infoPopupSelector, {
             })
             .finally(() => {
                 popupWithUserForm.loading(false);
+                popupWithUserForm.close();
             })
     }
 })
@@ -160,6 +153,7 @@ const popupWithAvatarForm = new PopupWithForm(avatarPopupSelector, {
         })
         .finally(() => {
             popupWithAvatarForm.loading(false);
+            popupWithAvatarForm.close();
         })
     }
 })

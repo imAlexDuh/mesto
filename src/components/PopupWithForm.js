@@ -41,7 +41,6 @@ export class PopupWithForm extends Popup {
     _submitEHandler(e) {
         e.preventDefault();
         this._submit(this._getInputValues());
-        this.close();
     }
 
     setInputValues(userData) {

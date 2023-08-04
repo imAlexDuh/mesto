@@ -6,8 +6,7 @@ export class Section {
 
     renderItems(cardsData) {
         cardsData.forEach(card => {
-            card.forEach(element =>
-                this._renderer(element));
+                this._renderer(card);
         });
     }
 

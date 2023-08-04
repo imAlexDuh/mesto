@@ -19,13 +19,27 @@ class Card {
         return cardElement
     }
 
-    _like(data) {
+    enableLikeState() {
         this._likeButton.classList.toggle("elements__card-button_active");
+    }
+
+    disableLikeState() {
+        this._likeButton.classList.remove("elements__card-button_active");
+    }
+
+    checkLikeState() {
+        this._data.likes.forEach((likeOwner) => {
+            if(likeOwner._id === this._ownerId) {
+                this.enableLikeState();
+            }
+        })
+    }
+
+    _like(data) {
         this._pressLike(data);
     }
 
     _dislike(data) {
-        this._likeButton.classList.remove("elements__card-button_active");
         this._unpressLike(data);
     }
 
@@ -76,6 +90,7 @@ class Card {
         this._cardName.textContent = this._data.name;
         this.enableLikeCount(this._data);
         this._checkCardsOwner();
+        this.checkLikeState();
         this._setEventListeners();
         return this._element;
     }
